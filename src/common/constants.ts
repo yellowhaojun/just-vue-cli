@@ -25,3 +25,6 @@ export const HTML_TEMPLATE_PATH = path.join(__dirname, '../../index.html')
 
 // 配置的路径
 export const JUST_VUE_CONFIG = path.join(CWD, './just.vue.config.js')
+
+// 默认端口号
+export const PORT = 8080

@@ -1,6 +1,9 @@
 import { VueLoaderPlugin } from 'vue-loader'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import { EXTENSIONS, HTML_TEMPLATE_PATH } from '../common/constants'
+import { getCommonConfig } from '../common/utils'
+
+const { alias = {} } = getCommonConfig()
 
 export const webpackCommonConfig = {
   module: {
@@ -35,7 +38,8 @@ export const webpackCommonConfig = {
   resolve: {
     extensions: EXTENSIONS,
     alias: {
-      vue: 'vue/dist/vue.esm-browser.js'
+      vue: 'vue/dist/vue.esm-browser.js',
+      ...alias
     }
   },
   plugins: [

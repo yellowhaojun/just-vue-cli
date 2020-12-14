@@ -6,6 +6,7 @@
 
 <script>
 import { ref, onMounted } from 'vue'
+import { test } from '@/test'
 
 export default {
   setup() {
@@ -18,6 +19,7 @@ export default {
 
     onMounted (() => {
       console.log(process.env.NODE_ENV)
+      test()
     })
 
     return {

@@ -2,9 +2,7 @@ import merge from 'webpack-merge'
 import webpack from 'webpack'
 import { webpackCommonConfig } from './webpack.common.conf'
 import { PROD_MODE, DEFAULT_ENTRY, DEFAULT_OUTPUT } from '../common/constants'
-import { setNodeEnv, getDefineNodeEnv, getUserConfig } from '../common/utils'
-
-console.log(getUserConfig())
+import { setNodeEnv, getDefineNodeEnv } from '../common/utils'
 
 setNodeEnv(PROD_MODE)
 
