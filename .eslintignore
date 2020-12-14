@@ -1,0 +1,10 @@
+node_modules/*
+dist/*
+mock/*
+lib/*
+demo/*
+commitlint.config.js
+.eslintrc.js
+just.vue.config.js
+src/index.ts
+index.html
