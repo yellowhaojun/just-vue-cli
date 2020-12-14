@@ -4,7 +4,8 @@ module.exports = {
   // 编译时候的配置
   build: {
     publicPath: '', // 通用路径
-    cssSourceMap: false // cssSourceMap
+    cssSourceMap: false, // cssSourceMap
+    devtool: 'none' // sourceMap
   },
   // 开发时使用的配置
   dev: {
@@ -12,7 +13,8 @@ module.exports = {
     cssSourceMap: false, // cssSourceMap
     proxy: {}, // 代理
     publicPath: '', // 通用路径
-    port: 8006 // 端口号
+    port: 8006, // 端口号
+    devtool: 'cheap-module-source-map' // sourceMap
   },
   // 通用的配置
   common: {

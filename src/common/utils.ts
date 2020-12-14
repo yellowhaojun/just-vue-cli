@@ -9,14 +9,16 @@ export interface DefineNodeEnv {
   [key: string]: string
 }
 export interface BuildConfig {
-  publicPath?: string
+  publicPath?: string,
+  devtool?: string
 }
 export interface DevConfig {
   autoOpenBrowser?: boolean;
   cssSourceMap?: boolean;
   publicPath?: string;
   port?: number;
-  proxy?: ProxyConfigArray | ProxyConfigMap
+  proxy?: ProxyConfigArray | ProxyConfigMap,
+  devtool?: string
 }
 
 export interface CommonConfig {
@@ -42,13 +44,16 @@ export function setNodeEnv (value: NodeEnv): void {
  */
 export function getUserConfig (): UserConfig {
   let config = {
-    build: {},
+    build: {
+      devtool: 'none'
+    },
     dev: {
       autoOpenBrowser: false,
       cssSourceMap: false,
       port: 8080,
       publicPath: '/',
-      proxy: {}
+      proxy: {},
+      devtool: 'cheap-module-source-map'
     },
     common: {
       alias: {}

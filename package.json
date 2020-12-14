@@ -7,6 +7,7 @@
   },
   "scripts": {
     "dev": "tsc && tsc --watch",
+    "serve": "just-vue-cli serve",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx,.vue src"
   },
   "repository": {
