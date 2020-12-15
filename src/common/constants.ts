@@ -28,3 +28,9 @@ export const JUST_VUE_CONFIG = path.join(CWD, './just.vue.config.js')
 
 // 默认端口号
 export const PORT = 8080
+
+// 默认postcss.config.js
+export const POSTCSS_CONFIG = path.join(__dirname, '../../postcss.config.js')
+
+// 运行目录的postcss.config.js的路径
+export const CWD_POSTCSSS_CONFIG = path.join(CWD, './postcss.config.js')

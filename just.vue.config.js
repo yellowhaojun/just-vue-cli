@@ -16,7 +16,7 @@ module.exports = {
     port: 8006, // 端口号
     devtool: 'cheap-module-source-map' // sourceMap
   },
-  // 通用的配置
+  // 通用配置
   common: {
     // alias配置
     alias: {

@@ -1,6 +1,7 @@
 <template>
   <img src="./logo.png">
   <h1>Hello Vue 3!</h1>
+  <div class="test"></div>
   <button @click="inc">Clicked {{ count }} times.</button>
 </template>
 
@@ -36,5 +37,12 @@ img {
 }
 h1 {
   font-family: Arial, Helvetica, sans-serif;
+}
+.test {
+  display: flex;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
+  background-color: #f90;
 }
 </style>

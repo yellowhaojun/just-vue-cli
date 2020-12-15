@@ -1,34 +1,6 @@
 import { JUST_VUE_CONFIG } from './constants'
-import { ProxyConfigArray, ProxyConfigMap } from 'webpack-dev-server'
-import {} from 'webpack'
-
-export type NodeEnv = 'production' | 'development' | 'test'
-
-export interface DefineNodeEnv {
-  'process.env.NODE_ENV': string;
-  [key: string]: string
-}
-export interface BuildConfig {
-  publicPath?: string,
-  devtool?: string
-}
-export interface DevConfig {
-  autoOpenBrowser?: boolean;
-  cssSourceMap?: boolean;
-  publicPath?: string;
-  port?: number;
-  proxy?: ProxyConfigArray | ProxyConfigMap,
-  devtool?: string
-}
-
-export interface CommonConfig {
-  alias?: { [key: string]: string; }
-}
-export interface UserConfig {
-  build: BuildConfig,
-  dev: DevConfig,
-  common: CommonConfig
-}
+import { NodeEnv, UserConfig, DevConfig, BuildConfig, CommonConfig, DefineNodeEnv } from './types'
+import fs from 'fs'
 
 /**
  * 设置NODE_ENV
@@ -101,4 +73,13 @@ export function getDefineNodeEnv (): DefineNodeEnv {
   return {
     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
   }
+}
+
+/**
+ * 判断运行目录的是否存在某个文件
+ * @param {String} file 需要判断的文件路径
+ * @returns {Boolean} pass 是否存在文件
+ */
+export function getFileExists (file: string): boolean {
+  return fs.existsSync(file)
 }
