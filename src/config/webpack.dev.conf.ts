@@ -5,7 +5,7 @@ import { webpackCommonConfig } from './webpack.common.conf'
 import { DEV_MODE, DEFAULT_OUTPUT } from '../common/constants'
 import { setNodeEnv, getDefineNodeEnv, getUserDevConfig } from '../common/utils'
 
-const { devtool } = getUserDevConfig()
+const { devtool, autoOpenBrowser = false } = getUserDevConfig()
 
 setNodeEnv(DEV_MODE)
 
@@ -17,30 +17,33 @@ const webpackDevConfig = merge(webpackCommonConfig as any, {
   },
   devtool,
   devServer: {
+    logLevel: 'silent',
+    clientLogLevel: 'silent',
     inline: true,
     hot: true,
     stats: 'minimal',
     publicPath: '/',
-    overlay: true
+    overlay: true,
+    open: autoOpenBrowser,
+    quiet: false
   },
   optimization: {
     noEmitOnErrors: true
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new FriendlyErrorsPlugin(),
+    new FriendlyErrorsPlugin({
+      compilationSuccessInfo: {
+        messages: [],
+        notes: []
+      },
+      clearConsole: true
+    }),
     new webpack.ProgressPlugin(),
     new webpack.DefinePlugin({
       ...getDefineNodeEnv()
     })
   ]
-  // externals: [{
-  //   vue: {
-  //     root: 'Vue',
-  //     commonjs: 'vue',
-  //     commonjs2: 'vue',
-  //   }
-  // }]
 })
 
 export default webpackDevConfig

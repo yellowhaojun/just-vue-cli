@@ -37,3 +37,6 @@ export const PORT = 8080
 
 // 运行目录的postcss.config.js的路径
 export const CWD_POSTCSSS_CONFIG = path.join(CWD, './postcss.config.js')
+
+// 图片资源限制
+export const LIMIT = 10000

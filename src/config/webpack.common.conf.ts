@@ -1,7 +1,7 @@
 import { VueLoaderPlugin } from 'vue-loader'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import ESLintWebpackPlugin from 'eslint-webpack-plugin'
-import { EXTENSIONS, HTML_TEMPLATE_PATH, CWD } from '../common/constants'
+import { EXTENSIONS, HTML_TEMPLATE_PATH, CWD, LIMIT } from '../common/constants'
 import { getCommonConfig, getEntry, getPostCssConf } from '../common/utils'
 import babelConf from '../config/babel.conf'
 const { alias = {}, entry = {}, eslint = { open: true }, externals = [] } = getCommonConfig()
@@ -23,10 +23,11 @@ const webpackCommonConfig = {
         }
       },
       {
-        test: /.(png|jpe?g|gif|ico|svg)(\?\S+)?$/,
+        test: /.(png|jpe?g|gif|ico)(\?\S+)?$/,
         use: {
           loader: 'file-loader',
           options: {
+            limit: LIMIT,
             name: 'img/[name]-[hash].[hash:7].[ext]' // 指定资源路径
           }
         }
@@ -46,6 +47,14 @@ const webpackCommonConfig = {
         exclude: /node_modules/,
         loader: 'babel-loader',
         options: babelConf
+      },
+      {
+        test: /\.(woff2?|eot|ttf|otf|svg)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: LIMIT,
+          name: 'fonts/[name].[hash:7].[ext]'
+        }
       }
     ]
   },
