@@ -1,47 +1,53 @@
 import { VueLoaderPlugin } from 'vue-loader'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
-import { EXTENSIONS, HTML_TEMPLATE_PATH, POSTCSS_CONFIG, CWD_POSTCSSS_CONFIG } from '../common/constants'
-import { getCommonConfig, getFileExists } from '../common/utils'
+import ESLintWebpackPlugin from 'eslint-webpack-plugin'
+import { EXTENSIONS, HTML_TEMPLATE_PATH, CWD } from '../common/constants'
+import { getCommonConfig, getEntry, getPostCssConf } from '../common/utils'
+import babelConf from '../config/babel.conf'
+const { alias = {}, entry = {}, eslint = { open: true }, externals = [] } = getCommonConfig()
 
-const { alias = {} } = getCommonConfig()
+// 获取配置
+const entrys = getEntry(entry)
 
-export const webpackCommonConfig = {
+const webpackCommonConfig = {
+  entry: entrys,
   module: {
-    rules: [{
-      test: /\.vue$/,
-      use: {
-        loader: 'vue-loader',
-        options: {
-          hotReload: true
-        }
-      }
-    }, {
-      test: /.(png|jpe?g|gif|ico|svg)(\?\S+)?$/,
-      use: {
-        loader: 'file-loader',
-        options: {
-          name: '[name]-[hash].[ext]'
-        }
-      }
-    }, {
-      test: /\.(sc|sa|c)ss$/,
-      use: ['style-loader', 'css-loader',
-        {
-          loader: 'postcss-loader',
+    rules: [
+      {
+        test: /\.vue$/,
+        use: {
+          loader: 'vue-loader',
           options: {
-            postcssOptions: {
-              path: getFileExists(CWD_POSTCSSS_CONFIG) ? CWD_POSTCSSS_CONFIG : POSTCSS_CONFIG
-            }
+            hotReload: true
           }
-        }, 'sass-loader']
-    }, {
-      test: /\.(ts|js)x?$/,
-      exclude: /node_modules/,
-      loader: 'babel-loader',
-      options: {
-        presets: ['@babel/preset-env']
+        }
+      },
+      {
+        test: /.(png|jpe?g|gif|ico|svg)(\?\S+)?$/,
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: 'img/[name]-[hash].[hash:7].[ext]' // 指定资源路径
+          }
+        }
+      },
+      {
+        test: /\.(sc|sa|c)ss$/,
+        use: ['style-loader', 'css-loader', // TODO新增是否分离样式配置
+          {
+            loader: 'postcss-loader',
+            options: {
+              postcssOptions: { ...getPostCssConf() }
+            }
+          }, 'sass-loader']
+      },
+      {
+        test: /\.(ts|js|jsx|tsx)x?$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+        options: babelConf
       }
-    }]
+    ]
   },
   resolve: {
     extensions: EXTENSIONS,
@@ -55,5 +61,23 @@ export const webpackCommonConfig = {
     new HtmlWebpackPlugin({
       template: HTML_TEMPLATE_PATH
     })
-  ]
+  ],
+  externals
 }
+
+// 配置ESLINT，当前方法需要使用别的包进行处理
+if (eslint.open) {
+  const { exclude = [], extensions = [] } = eslint
+  webpackCommonConfig.plugins.push(
+    new ESLintWebpackPlugin({
+      context: CWD,
+      extensions,
+      fix: false,
+      exclude,
+      cache: false,
+      emitError: true
+    })
+  )
+}
+
+export { webpackCommonConfig }

@@ -4,6 +4,8 @@
 
 命令
 
+使用命令启动
+
 ```bash
 just-vue-cli serve
 ```

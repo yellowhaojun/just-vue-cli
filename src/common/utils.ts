@@ -1,6 +1,8 @@
-import { JUST_VUE_CONFIG } from './constants'
-import { NodeEnv, UserConfig, DevConfig, BuildConfig, CommonConfig, DefineNodeEnv } from './types'
 import fs from 'fs'
+import path from 'path'
+import { JUST_VUE_CONFIG, ESLINT_EXTENSIONS, ESLINT_EXCLUDE, DEFAULT_ENTRY, CWD, CWD_POSTCSSS_CONFIG } from './constants'
+import { NodeEnv, UserConfig, DevConfig, BuildConfig, CommonConfig, DefineNodeEnv, Entry, PostcssOptions } from './types'
+import postcssConf from '../config/postcss.conf'
 
 /**
  * 设置NODE_ENV
@@ -15,7 +17,7 @@ export function setNodeEnv (value: NodeEnv): void {
  * 获取用户设置的配置
  */
 export function getUserConfig (): UserConfig {
-  let config = {
+  let config: UserConfig = {
     build: {
       devtool: 'none'
     },
@@ -28,7 +30,14 @@ export function getUserConfig (): UserConfig {
       devtool: 'cheap-module-source-map'
     },
     common: {
-      alias: {}
+      externals: [],
+      alias: {},
+      eslint: {
+        open: false, // 默认关闭
+        exclude: ESLINT_EXCLUDE,
+        extensions: ESLINT_EXTENSIONS
+      },
+      entry: DEFAULT_ENTRY
     }
   }
   try {
@@ -83,3 +92,29 @@ export function getDefineNodeEnv (): DefineNodeEnv {
 export function getFileExists (file: string): boolean {
   return fs.existsSync(file)
 }
+
+/**
+ * 获取实际的入口路径
+ * @param entrys
+ */
+export function getEntry (entrys: Entry): Entry {
+  const values = {}
+  for (const key in entrys) {
+    values[key] = path.join(CWD, entrys[key])
+  }
+  return values
+}
+
+/**
+ * 获取postcssConfig
+ */
+export function getPostCssConf (): PostcssOptions {
+  // const postcssOptions: PostcssOptions = {}
+  const { plugins } = postcssConf
+  if (getFileExists(CWD_POSTCSSS_CONFIG)) {
+    return { path: CWD_POSTCSSS_CONFIG }
+  }
+  return { plugins: plugins }
+}
+
+// assetsPath
