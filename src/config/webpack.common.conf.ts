@@ -2,15 +2,13 @@ import { VueLoaderPlugin } from 'vue-loader'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import ESLintWebpackPlugin from 'eslint-webpack-plugin'
 import { EXTENSIONS, HTML_TEMPLATE_PATH, CWD, LIMIT } from '../common/constants'
-import { getCommonConfig, getEntry, getPostCssConf } from '../common/utils'
+import { getCommonConfig, getPostCssConf } from '../common/utils'
 import babelConf from '../config/babel.conf'
-const { alias = {}, entry = {}, eslint = { open: true }, externals = [] } = getCommonConfig()
+const { alias = {}, eslint = { open: true }, externals = [] } = getCommonConfig()
 
 // 获取配置
-const entrys = getEntry(entry)
 
 const webpackCommonConfig = {
-  entry: entrys,
   module: {
     rules: [
       {

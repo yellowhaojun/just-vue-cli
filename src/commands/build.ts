@@ -10,7 +10,6 @@ const spinner = ora('building for production...')
 const build = function (): void {
   rimraf(DEFAULT_OUTPUT, (err) => {
     if (err) throw err
-
     spinner.start()
     webpack(webpackProdConfig, (err, stats) => {
       spinner.stop()

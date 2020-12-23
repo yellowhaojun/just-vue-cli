@@ -141,3 +141,15 @@ export function getPages (): PageItem[] {
   })
   return pages
 }
+
+export function getPageSrc (name: string): string {
+  const pages = getPages()
+  let res = ''
+  for (let i = 0; i < pages.length; i++) {
+    if (pages[i].name === name) {
+      res = path.join(CWD, pages[i].src)
+      break
+    }
+  }
+  return res
+}

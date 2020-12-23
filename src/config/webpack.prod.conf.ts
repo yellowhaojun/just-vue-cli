@@ -2,13 +2,22 @@ import merge from 'webpack-merge'
 import webpack from 'webpack'
 import { webpackCommonConfig } from './webpack.common.conf'
 import { PROD_MODE, DEFAULT_OUTPUT } from '../common/constants'
-import { setNodeEnv, getDefineNodeEnv, getUserDevConfig } from '../common/utils'
-const { devtool } = getUserDevConfig()
+import { setNodeEnv, getDefineNodeEnv, getUserBuildConfig, getCommonConfig, getPageSrc, getEntry } from '../common/utils'
+const { devtool } = getUserBuildConfig()
+const { multiple, entry = {} } = getCommonConfig()
+let entrys = {}
+
+if (multiple && process.argv[3]) {
+  entrys[`${process.argv[3]}`] = getPageSrc(process.argv[3])
+} else {
+  entrys = getEntry(entry)
+}
 
 setNodeEnv(PROD_MODE)
 
 const webpackProdConfig = merge(webpackCommonConfig as any, {
   mode: PROD_MODE,
+  entry: entrys,
   devtool,
   output: {
     path: DEFAULT_OUTPUT,

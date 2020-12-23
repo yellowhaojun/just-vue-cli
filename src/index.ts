@@ -10,7 +10,9 @@ import create from './commands/create'
 
 version(`@just-vue-cli/cli ${packageJson.version}`)
 
-command('build').description('build a vue app').action(build)
+command('build')
+  .description('build a vue app')
+  .action(build)
 
 command('serve').description('run webpack dev server').action(serve)
 
