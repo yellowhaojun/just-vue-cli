@@ -4,6 +4,7 @@ import FriendlyErrorsPlugin from 'friendly-errors-webpack-plugin'
 import { webpackCommonConfig } from './webpack.common.conf'
 import { DEV_MODE, DEFAULT_OUTPUT, MULTIPLE_ENTRY } from '../common/constants'
 import { setNodeEnv, getDefineNodeEnv, getUserDevConfig, getEntry, getCommonConfig } from '../common/utils'
+import { router } from '../helper/multiple'
 
 const { devtool, autoOpenBrowser = false } = getUserDevConfig()
 const { multiple, entry = {} } = getCommonConfig()
@@ -30,7 +31,10 @@ const webpackDevConfig = merge(webpackCommonConfig as any, {
     publicPath: '/',
     overlay: true,
     open: autoOpenBrowser,
-    quiet: false
+    quiet: false,
+    before (app) {
+      if (multiple) router(app)
+    }
   },
   optimization: {
     noEmitOnErrors: true

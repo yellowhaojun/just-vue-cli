@@ -1,13 +1,11 @@
-import ejs from 'ejs'
-import fs from 'fs'
 import chalk from 'chalk'
-import path from 'path'
 import webpack from 'webpack'
 import WebpackDevServer from 'webpack-dev-server'
 import webpackDevConfig from '../config/webpack.dev.conf'
 import { getPort } from 'portfinder'
-import { getUserDevConfig, getCommonConfig, getPages } from '../common/utils'
-import { CWD, PORT } from '../common/constants'
+import { getUserDevConfig, getCommonConfig } from '../common/utils'
+import { PORT } from '../common/constants'
+import { createTemp } from '../helper/multiple'
 
 const { port = PORT } = getUserDevConfig()
 
@@ -21,20 +19,7 @@ const serve = function (): void {
 
     // 当开启多页应用的石化, 检查本地是否存在临时文件
     if (multiple) {
-      const pageTempl = path.join(__dirname, '../../templates/page.ejs')
-      const mainTempl = path.join(__dirname, '../../templates/main.ejs')
-      // 创建page.ts文件
-      const pages = getPages()
-      const output = path.join(CWD, 'temp')
-      ejs.renderFile(pageTempl, { pages }, {}, function (err, res) {
-        if (err) throw err
-        fs.writeFileSync(path.join(output, './page.ts'), res)
-      })
-      // 创建main.ts文件
-      ejs.renderFile(mainTempl, {}, {}, function (err, res) {
-        if (err) throw err
-        fs.writeFileSync(path.join(output, './main.ts'), res)
-      })
+      createTemp()
     }
 
     const server = new WebpackDevServer(

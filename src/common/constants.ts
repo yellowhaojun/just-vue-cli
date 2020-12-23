@@ -42,5 +42,5 @@ export const CWD_POSTCSSS_CONFIG = path.join(CWD, './postcss.config.js')
 export const LIMIT = 10000
 
 export const MULTIPLE_ENTRY = {
-  app: path.join(CWD, './temp/main.ts')
+  app: path.join(CWD, './.temp/main.ts')
 }

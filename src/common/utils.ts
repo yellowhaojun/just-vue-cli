@@ -119,6 +119,9 @@ export function getPostCssConf (): PostcssOptions {
   return { plugins: plugins }
 }
 
+/**
+ * 获取页面目录
+ */
 export function getPages (): PageItem[] {
   const globPath = path.join(CWD, './src/pages/**/*')
   const pages: PageItem[] = []
@@ -129,7 +132,6 @@ export function getPages (): PageItem[] {
     const last = pageArrs[pageArrs.length - 2]
     const prefix = pageArrs[pageArrs.length - 3]
     if (_page === 'main.ts') {
-      console.log(prefix)
       pages.push({
         src: pageArrs.join('/'),
         page: last,
