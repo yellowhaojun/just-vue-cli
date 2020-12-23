@@ -40,6 +40,7 @@ export interface CommonConfig {
   alias?: { [key: string]: string; };
   eslint?: EslintConfig;
   entry?: { [key: string]: string; };
+  multiple?: boolean;
 }
 
 // 用户配置
@@ -53,4 +54,10 @@ export interface UserConfig {
 export interface PostcssOptions {
   plugins?: string[],
   path?: string
+}
+
+export interface PageItem {
+  src: string,
+  page: string,
+  name: string
 }

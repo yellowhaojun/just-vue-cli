@@ -1,0 +1,6 @@
+
+<% pages.forEach(function(item){ %>
+  export const <%= item.name %> = function () {
+    return import(/* webpackChunkName: "<%= item.name %>" */ '..<%= item.src %>')
+  }
+<% }); %>

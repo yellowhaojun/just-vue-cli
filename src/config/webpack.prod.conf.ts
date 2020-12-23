@@ -27,13 +27,6 @@ const webpackProdConfig = merge(webpackCommonConfig as any, {
       ...getDefineNodeEnv()
     })
   ]
-  // externals: [{
-  //   vue: {
-  //     root: 'Vue',
-  //     commonjs: 'vue',
-  //     commonjs2: 'vue',
-  //   }
-  // }]
 })
 
 export default webpackProdConfig

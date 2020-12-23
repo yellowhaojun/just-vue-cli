@@ -2,14 +2,19 @@ import merge from 'webpack-merge'
 import webpack from 'webpack'
 import FriendlyErrorsPlugin from 'friendly-errors-webpack-plugin'
 import { webpackCommonConfig } from './webpack.common.conf'
-import { DEV_MODE, DEFAULT_OUTPUT } from '../common/constants'
-import { setNodeEnv, getDefineNodeEnv, getUserDevConfig } from '../common/utils'
+import { DEV_MODE, DEFAULT_OUTPUT, MULTIPLE_ENTRY } from '../common/constants'
+import { setNodeEnv, getDefineNodeEnv, getUserDevConfig, getEntry, getCommonConfig } from '../common/utils'
 
 const { devtool, autoOpenBrowser = false } = getUserDevConfig()
+const { multiple, entry = {} } = getCommonConfig()
+const entrys = !multiple ? getEntry(entry) : MULTIPLE_ENTRY
+
+// console.log(entrys)
 
 setNodeEnv(DEV_MODE)
 
 const webpackDevConfig = merge(webpackCommonConfig as any, {
+  entry: entrys,
   mode: DEV_MODE,
   output: {
     path: DEFAULT_OUTPUT,

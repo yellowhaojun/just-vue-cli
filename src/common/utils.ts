@@ -1,7 +1,8 @@
 import fs from 'fs'
+import glob from 'glob'
 import path from 'path'
 import { JUST_VUE_CONFIG, ESLINT_EXTENSIONS, ESLINT_EXCLUDE, DEFAULT_ENTRY, CWD, CWD_POSTCSSS_CONFIG } from './constants'
-import { NodeEnv, UserConfig, DevConfig, BuildConfig, CommonConfig, DefineNodeEnv, Entry, PostcssOptions } from './types'
+import { NodeEnv, UserConfig, DevConfig, BuildConfig, CommonConfig, DefineNodeEnv, Entry, PostcssOptions, PageItem } from './types'
 import postcssConf from '../config/postcss.conf'
 
 /**
@@ -37,7 +38,8 @@ export function getUserConfig (): UserConfig {
         exclude: ESLINT_EXCLUDE,
         extensions: ESLINT_EXTENSIONS
       },
-      entry: DEFAULT_ENTRY
+      entry: DEFAULT_ENTRY,
+      multiple: false
     }
   }
   try {
@@ -117,4 +119,23 @@ export function getPostCssConf (): PostcssOptions {
   return { plugins: plugins }
 }
 
-// assetsPath
+export function getPages (): PageItem[] {
+  const globPath = path.join(CWD, './src/pages/**/*')
+  const pages: PageItem[] = []
+  glob.sync(globPath).forEach(function (item) {
+    const page = item.replace(CWD, '')
+    const pageArrs = page.split('/')
+    const _page = pageArrs[pageArrs.length - 1]
+    const last = pageArrs[pageArrs.length - 2]
+    const prefix = pageArrs[pageArrs.length - 3]
+    if (_page === 'main.ts') {
+      console.log(prefix)
+      pages.push({
+        src: pageArrs.join('/'),
+        page: last,
+        name: prefix !== 'pages' ? `${prefix}_${last}` : last
+      })
+    }
+  })
+  return pages
+}
