@@ -1,7 +1,4 @@
-import Vue from 'vue'
-import * as pages from './page.ts'
-
-console.log(pages)
+import * as pages from './page'
 
 const call = function () {
   const config = arguments[0]
@@ -15,14 +12,15 @@ const call = function () {
 
 document.addEventListener('DOMContentLoaded', function (event) {
   const scriptAreaElement = document.getElementById('scriptArea')
-  const pageId = scriptAreaElement ? scriptAreaElement.dataset.pageId : 'home'
-  const conf = pages[pageId]
+  const pageId = scriptAreaElement ? scriptAreaElement.dataset.pageId : 'index'
+  const conf: Function = pages[pageId]
   if (conf) {
-    conf().then(function ({ default: defaultExport }) {
-      call(defaultExport)
-    }).catch(function (err) {
-      console.error(err)
-    })
-    // conf(call)
+    if (typeof conf === 'function') {
+      conf().then(function () {
+        call()
+      }).catch(function (err: Error) {
+        console.error(err)
+      })
+    }
   }
 })

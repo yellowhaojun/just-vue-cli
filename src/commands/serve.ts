@@ -19,6 +19,7 @@ const serve = function (): void {
 
     // 当开启多页应用的石化, 检查本地是否存在临时文件
     if (multiple) {
+      // 单独启动某个目录
       createTemp()
     }
 

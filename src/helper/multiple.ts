@@ -9,8 +9,8 @@ const pages = getPages()
  * 创建临时文件
  */
 export const createTemp = function (): void {
-  const pageTempl = path.join(__dirname, '../../templates/page.ejs')
-  const mainTempl = path.join(__dirname, '../../templates/main.ejs')
+  const pageTempl = path.join(__dirname, '../../templates/page.tpl')
+  const mainTempl = path.join(__dirname, '../../templates/main.tpl')
 
   // 创建page.ts文件
   const output = path.join(CWD, '.temp')
