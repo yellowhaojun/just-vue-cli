@@ -44,3 +44,6 @@ export const LIMIT = 10000
 export const MULTIPLE_ENTRY = {
   app: path.join(CWD, './.temp/main.ts')
 }
+
+// template
+export const TEMPLATE = path.join(__dirname, '../../templates')

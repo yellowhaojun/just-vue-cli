@@ -1,7 +1,7 @@
 import ejs from 'ejs'
 import fs from 'fs'
 import path from 'path'
-import { CWD } from '../common/constants'
+import { CWD, TEMPLATE } from '../common/constants'
 import { getPages, getFileExists } from '../common/utils'
 const pages = getPages()
 
@@ -9,8 +9,8 @@ const pages = getPages()
  * 创建临时文件
  */
 export const createTemp = function (): void {
-  const pageTempl = path.join(__dirname, '../../templates/page.tpl')
-  const mainTempl = path.join(__dirname, '../../templates/main.tpl')
+  const pageTempl = path.join(TEMPLATE, './page.tpl')
+  const mainTempl = path.join(TEMPLATE, './main.tpl')
 
   // 创建page.ts文件
   const output = path.join(CWD, '.temp')

@@ -1,7 +1,4 @@
 import { exec } from 'shelljs'
-import ora from 'ora'
-import chalk from 'chalk'
-
 interface InatallOptions {
   global?: boolean;
   save?: boolean;
@@ -22,7 +19,6 @@ export const createCommand = function (pack: string, options: InatallOptions): s
  * 安装inatll
  */
 export const install = function (list: string[] = [], options: InatallOptions = {}): void {
-  const spinner = ora('installing package...')
   const commandList: string[] = []
   // 生成命令
   if (list && list.length > 0) {
@@ -30,8 +26,5 @@ export const install = function (list: string[] = [], options: InatallOptions = 
       commandList.push(createCommand(item, options))
     })
   }
-  spinner.start()
   exec(commandList.join('\n'))
-  spinner.stop()
-  chalk.cyan(' Install complete.\n')
 }

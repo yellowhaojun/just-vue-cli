@@ -1,5 +1,5 @@
 import ejs from 'ejs'
-import { CWD } from '../common/constants'
+import { CWD, TEMPLATE } from '../common/constants'
 import fs from 'fs'
 import path from 'path'
 
@@ -7,8 +7,8 @@ import path from 'path'
  * 创建配置文件
  */
 export const createConf = function (): void {
-  const eslintrc = path.join(__dirname, '../../templates/eslintrc.tpl')
-  const eslintignore = path.join(__dirname, '../../templates/eslintignore.tpl')
+  const eslintrc = path.join(TEMPLATE, './eslintrc.tpl')
+  const eslintignore = path.join(TEMPLATE, './eslintignore.tpl')
 
   // 创建配置文件
   ejs.renderFile(eslintrc, {}, {}, function (err, res) {
